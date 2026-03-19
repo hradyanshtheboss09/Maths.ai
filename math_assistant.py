@@ -9,7 +9,7 @@ st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", lay
 
 # --- THE ULTIMATE API SETUP ---
 API_KEY = st.secrets["GEMINI_API_KEY"]
-MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"}"
+MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
 
 # --- CHAT LOGIC ---
 if prompt := st.chat_input("Ask me anything..."):
