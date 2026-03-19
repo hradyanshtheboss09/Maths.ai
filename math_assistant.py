@@ -16,7 +16,7 @@ st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", lay
 API_KEY = st.secrets["GEMINI_API_KEY"]
 
 # 2. This is the stable URL for 2026 that works with your key
-MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
 # 3. Data Persistence Functions
 def load_users():
     if os.path.exists("users.json"):
