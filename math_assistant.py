@@ -18,8 +18,7 @@ st.caption("Created and Owned by Manan Soni")
 
 # 4. API Connection
 API_KEY = st.secrets["GEMINI_API_KEY"]
-MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
-
+MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={API_KEY}"
 # 5. Chat History System
 if "messages" not in st.session_state:
     st.session_state.messages = []
