@@ -14,7 +14,7 @@ if "GEMINI_API_KEY" in st.secrets:
   API_KEY = "AIzaSyDRpy73FK78Hi8RNH6eyhb2vUO8vVKK4Vk"
 
 # Using the stable 1.5-flash model which is the most reliable for March 2026
-MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key={API_KEY}"
+MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-3-flash:generateContent?key={API_KEY}"
 # 3. Data Persistence Functions
 def load_users():
     if os.path.exists("users.json"):
