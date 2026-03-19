@@ -12,7 +12,7 @@ st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", lay
 # This looks for the key in the Streamlit Cloud dashboard
 # DO NOT put your actual key here. Just use this name:
 API_KEY = st.secrets["GEMINI_API_KEY"]
-MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key={API_KEY}"
 # 3. Data Persistence Functions
 def load_users():
     if os.path.exists("users.json"):
