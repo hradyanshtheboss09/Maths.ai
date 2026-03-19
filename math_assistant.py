@@ -7,11 +7,39 @@ import time
 # 1. Page Configuration
 st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", layout="wide")
 
-# 2. API Setup
-# --- API SETUP ---
-# This looks for the key in the Streamlit Cloud dashboard
+# --- THE ULTIMATE API SETUP ---
+import requests
+
+# 1. Get the key from your Secrets
 API_KEY = st.secrets["GEMINI_API_KEY"]
-MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-3-flash:generateContent?key={API_KEY}"
+
+# 2. Try the most stable Global URL
+MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+
+# --- CHAT LOGIC ---
+if prompt := st.chat_input("Ask me anything..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        response_placeholder = st.empty()
+        # We add a simple wrapper to make sure the AI knows it's working for YOU
+        payload = {
+            "contents": [{"parts": [{"text": f"Context: You are Maths.ai developed by Manan Soni. Question: {prompt}"}]}]
+        }
+        
+        try:
+            # We increase timeout to 30 seconds for slow connections
+            res = requests.post(MODEL_URL, json=payload, timeout=30)
+            if res.status_code == 200:
+                full_response = res.json()['candidates'][0]['content']['parts'][0]['text']
+                response_placeholder.markdown(full_response)
+                st.session_state.messages.append({"role": "assistant", "content": full_response})
+            else:
+                st.error(f"Google says: {res.status_code}. Manan, try clicking 'Reboot App' in the Manage menu.")
+        except Exception as e:
+            st.error("Connection timed out. Please try again in 10 seconds.")
 # 3. Data Persistence Functions
 def load_users():
     if os.path.exists("users.json"):
