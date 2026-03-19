@@ -11,17 +11,14 @@ st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", lay
 API_KEY = st.secrets["GEMINI_API_KEY"]
 MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
 
-# --- CHAT LOGIC ---
-# --- CLEAN CHAT INTERFACE ---
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Show the conversation
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Single Chat Input
+# 6. THE ONLY CHAT INPUT (No duplicates!)
 if prompt := st.chat_input("Ask Maths.ai anything..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -30,7 +27,7 @@ if prompt := st.chat_input("Ask Maths.ai anything..."):
     with st.chat_message("assistant"):
         response_placeholder = st.empty()
         payload = {
-            "contents": [{"parts": [{"text": f"You are Maths.ai by Manan Soni. Answer this: {prompt}"}]}]
+            "contents": [{"parts": [{"text": f"You are a helpful math tutor. Question: {prompt}"}]}]
         }
         
         try:
@@ -40,9 +37,9 @@ if prompt := st.chat_input("Ask Maths.ai anything..."):
                 response_placeholder.markdown(answer)
                 st.session_state.messages.append({"role": "assistant", "content": answer})
             else:
-                st.error("Google is busy. Try one more time!")
+                st.error("Google's brain is busy. Try again in 5 seconds!")
         except:
-            st.error("Connection blink. Please refresh!")
+            st.error("Connection blink. Please refresh the page!")
 # 3. Data Persistence Functions
 def load_users():
     if os.path.exists("users.json"):
