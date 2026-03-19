@@ -12,29 +12,37 @@ API_KEY = st.secrets["GEMINI_API_KEY"]
 MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={API_KEY}"
 
 # --- CHAT LOGIC ---
-if prompt := st.chat_input("Ask me anything..."):
+# --- CLEAN CHAT INTERFACE ---
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Show the conversation
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Single Chat Input
+if prompt := st.chat_input("Ask Maths.ai anything..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
         response_placeholder = st.empty()
-        # We add a simple wrapper to make sure the AI knows it's working for YOU
         payload = {
-            "contents": [{"parts": [{"text": f"Context: You are Maths.ai developed by Manan Soni. Question: {prompt}"}]}]
+            "contents": [{"parts": [{"text": f"You are Maths.ai by Manan Soni. Answer this: {prompt}"}]}]
         }
         
         try:
-            # We increase timeout to 30 seconds for slow connections
             res = requests.post(MODEL_URL, json=payload, timeout=30)
             if res.status_code == 200:
-                full_response = res.json()['candidates'][0]['content']['parts'][0]['text']
-                response_placeholder.markdown(full_response)
-                st.session_state.messages.append({"role": "assistant", "content": full_response})
+                answer = res.json()['candidates'][0]['content']['parts'][0]['text']
+                response_placeholder.markdown(answer)
+                st.session_state.messages.append({"role": "assistant", "content": answer})
             else:
-                st.error(f"Google says: {res.status_code}. Manan, try clicking 'Reboot App' in the Manage menu.")
-        except Exception as e:
-            st.error("Connection timed out. Please try again in 10 seconds.")
+                st.error("Google is busy. Try one more time!")
+        except:
+            st.error("Connection blink. Please refresh!")
 # 3. Data Persistence Functions
 def load_users():
     if os.path.exists("users.json"):
