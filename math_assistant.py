@@ -9,7 +9,7 @@ st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", lay
 
 # 2. API Setup
 try:
-    API_KEY = st.secrets["AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY"]
+    API_KEY = os.environ.get("AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY")
 except:
     # If secrets file is missing, use this (REPLACE WITH YOUR KEY)
     API_KEY = "AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY"
