@@ -11,7 +11,7 @@ st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", lay
 # --- FIXED VERSION ---
 if "GEMINI_API_KEY" in st.secrets:
     # This runs when you are on the internet (Streamlit Cloud)
-  API_KEY = "AIzaSyAc2PSlnj1Vs1dvVAY2bQ-OSgofTDE5rdQ"
+  API_KEY = st.secrets["GEMINI_API_KEY"]
 
 # Using the stable 1.5-flash model which is the most reliable for March 2026
 MODEL_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key={API_KEY}"
