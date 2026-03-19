@@ -11,7 +11,9 @@ st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", lay
 # --- API SETUP ---
 # This looks for the key in the Streamlit Cloud dashboard
 # DO NOT put your actual key here. Just use this name:
-API_KEY = st.secrets["AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY"]
+# Just use this name in the code
+GEMINI_API_KEY = "AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY"
+API_KEY = st.secrets["GEMINI_API_KEY"]
 
 MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key={API_KEY}"
 
