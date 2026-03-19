@@ -8,12 +8,14 @@ import time
 st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", layout="wide")
 
 # 2. API Setup
-try:
-    API_KEY = os.environ.get("AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY")
-except:
-    # If secrets file is missing, use this (REPLACE WITH YOUR KEY)
+# --- API SETUP ---
+# This looks for the key in the Streamlit Cloud dashboard
+if "GEMINI_API_KEY" in st.secrets:
+    API_KEY = st.secrets["AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY"]
+else:
     API_KEY = "AIzaSyC9DdNxmzH1wYRMR9cPxmeiUKmfUXyoWnY"
-MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={API_KEY}"
+
+MODEL_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key={API_KEY}"
 
 # 3. Data Persistence Functions
 def load_users():
