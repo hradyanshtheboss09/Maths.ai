@@ -75,7 +75,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 8. Chat Input & AI Logic
+# 8. Chat Input & AI Logic (With Safety Bypass)
 if prompt := st.chat_input("Ask Maths.ai anything..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -83,27 +83,29 @@ if prompt := st.chat_input("Ask Maths.ai anything..."):
 
     with st.chat_message("assistant"):
         response_placeholder = st.empty()
-        system_context = f"You are Maths.ai, an expert tutor developed by Manan Soni. Mode: {mode}. Subject: {subject}. "
-        history_text = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state.messages])
-        full_query = system_context + history_text
-        payload = {"contents": [{"parts": [{"text": full_query}]}]}
+        
+        # This is the "Safety Bypass" payload
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "safetySettings": [
+                {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
+            ]
+        }
         
         try:
-            res = requests.post(MODEL_URL, json=payload, timeout=20)
+            res = requests.post(MODEL_URL, json=payload, timeout=30)
             if res.status_code == 200:
                 full_response = res.json()['candidates'][0]['content']['parts'][0]['text']
-                displayed_text = ""
-                for word in full_response.split(" "):
-                    displayed_text += word + " "
-                    response_placeholder.markdown(displayed_text + "▌")
-                    time.sleep(0.04)
                 response_placeholder.markdown(full_response)
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
             else:
-                st.error("Connection error. Check API settings.")
+                # This will tell us the EXACT error from Google
+                st.error(f"Google Response: {res.status_code} - {res.text}")
         except Exception as e:
-            st.error(f"Error: {e}")
-
+            st.error(f"System Error: {e}")
 # 9. Practice Section
 st.divider()
 with st.expander("📝 Quick Practice Quiz"):
