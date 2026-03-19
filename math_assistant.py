@@ -6,6 +6,18 @@ import time
 
 # 1. Page Configuration
 st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", layout="wide")
+# --- HIDE STREAMLIT BRANDING ---
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            .viewerBadge_container__1QSob {display: none !important;}
+            .st-emotion-cache-zq5wih {display: none !important;}
+            .st-emotion-cache-1lv7872 {display: none !important;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # 2. API Setup
 # --- FIXED VERSION ---
