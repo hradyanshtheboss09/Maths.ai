@@ -6,23 +6,37 @@ import time
 
 # 1. Page Configuration
 st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", layout="wide")
-# --- HIDE STREAMLIT BRANDING ---
-# --- HIDE TOP BUTTONS BUT KEEP SIDEBAR ---
+# --- HIDE GITHUB & DEPLOY BUT KEEP SIDEBAR TOGGLE ---
 hide_st_style = """
             <style>
-            /* Hides the "Deploy" button and the '...' menu in the top right */
-            .stAppDeployButton {display: none !important;}
-            #MainMenu {visibility: hidden;}
-            
-            /* Hides the footer "Made with Streamlit" */
-            footer {visibility: hidden;}
-            
-            /* Keeps the sidebar toggle visible but hides the rest of the header background if needed */
-            header {background-color: rgba(0,0,0,0) !important;}
+            /* 1. Specifically hide the Deploy button */
+            [data-testid="stAppDeployButton"] {
+                display: none !important;
+            }
+
+            /* 2. Specifically hide the GitHub icon (the link inside the toolbar) */
+            .stAppToolbar a {
+                display: none !important;
+            }
+
+            /* 3. Hide the '...' Main Menu */
+            #MainMenu {
+                visibility: hidden;
+            }
+
+            /* 4. Hide the footer */
+            footer {
+                visibility: hidden;
+            }
+
+            /* 5. FORCE the Sidebar button to stay visible */
+            [data-testid="stSidebarCollapsedControl"] {
+                display: block !important;
+                visibility: visible !important;
+            }
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
-
 # 2. API Setup
 # --- FIXED VERSION ---
 if "GEMINI_API_KEY" in st.secrets:
