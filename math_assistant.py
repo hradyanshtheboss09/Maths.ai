@@ -7,14 +7,18 @@ import time
 # 1. Page Configuration
 st.set_page_config(page_title="Maths.ai Pro - Manan Soni", page_icon="🧠", layout="wide")
 # --- HIDE STREAMLIT BRANDING ---
+# --- HIDE TOP BUTTONS BUT KEEP SIDEBAR ---
 hide_st_style = """
             <style>
+            /* Hides the "Deploy" button and the '...' menu in the top right */
+            .stAppDeployButton {display: none !important;}
             #MainMenu {visibility: hidden;}
+            
+            /* Hides the footer "Made with Streamlit" */
             footer {visibility: hidden;}
-            header {visibility: hidden;}
-            .viewerBadge_container__1QSob {display: none !important;}
-            .st-emotion-cache-zq5wih {display: none !important;}
-            .st-emotion-cache-1lv7872 {display: none !important;}
+            
+            /* Keeps the sidebar toggle visible but hides the rest of the header background if needed */
+            header {background-color: rgba(0,0,0,0) !important;}
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
