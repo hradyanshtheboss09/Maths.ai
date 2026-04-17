@@ -143,7 +143,7 @@ with st.expander("📝 Quick Practice Quiz"):
     if st.button("Generate Quiz"):
         if quiz_topic:
             with st.status("Generating..."):
-                quiz_prompt = f"Create a 3-question MCQ quiz about {quiz_topic}."
+                quiz_prompt = f"Create a 10-question MCQ quiz about {quiz_topic}."
                 q_payload = {"contents": [{"parts": [{"text": quiz_prompt}]}]}
                 q_res = requests.post(MODEL_URL, json=q_payload)
                 if q_res.status_code == 200:
